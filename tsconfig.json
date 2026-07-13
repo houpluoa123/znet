@@ -1,12 +1,14 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "module": "CommonJS", 
+    "module": "CommonJS",
     "outDir": "./dist",
     "noEmit": false,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "allowJs": true
+    "allowJs": true,
+    "noImplicitAny": false, 
+    "strict": false
   },
   "include": ["server.ts"]
 }
