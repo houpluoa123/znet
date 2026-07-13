@@ -9,9 +9,14 @@ import http from 'http';
 import { WebSocketServer, WebSocket } from 'ws';
 import sqlite3 from 'sqlite3';
 import crypto from 'crypto';
-import { createServer as createViteServer } from 'vite';
 import fs from 'fs';
 import AdmZip from 'adm-zip';
+
+// Xử lý import Vite an toàn cho Render
+let createViteServer: any;
+if (process.env.NODE_ENV !== 'production') {
+  createViteServer = require('vite').createServer;
+}
 
 const app = express();
 const PORT = Number(process.env.PORT) || 3000;
