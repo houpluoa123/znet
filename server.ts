@@ -2258,15 +2258,6 @@ initializeDatabase().then(async () => {
     });
     app.use(vite.middlewares);
   } else {
-    const distPath = path.join(process.cwd(), 'dist');
-    app.use(express.static(distPath));
-    app.get('*', (req, res) => {
-      try {
-        res.sendFile(path.join(distPath, 'index.html'));
-      } catch (error) {
-        res.status(500).send('Lỗi máy chủ phân phối Static Pages');
-      }
-    });
   }
 
   httpServer.listen(PORT, '0.0.0.0', () => {
