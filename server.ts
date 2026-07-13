@@ -2250,19 +2250,20 @@ initializeDatabase().then(async () => {
     });
   });
 
-  // Vite development bundler integration
+    // Vite development bundler integration
   if (process.env.NODE_ENV !== 'production') {
     const vite = await createViteServer({
       server: { middlewareMode: true },
       appType: 'spa'
     });
     app.use(vite.middlewares);
+  }
 
   // Cấu hình trang chủ để không bị lỗi 404
   app.get('/', (req, res) => {
     res.status(200).json({ 
       status: "online",
-      message: "ZNet API đang hoạt động!" 
+      message: "ZNet API đang hoạt động bình thường!" 
     });
   });
 
