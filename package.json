@@ -6,7 +6,6 @@
     "build": "echo 'No build step needed'",
     "start": "npx tsx server.ts"
   },
-
   "dependencies": {
     "express": "^4.22.2",
     "sqlite3": "^5.1.7",
