@@ -2258,23 +2258,23 @@ initializeDatabase().then(async () => {
     });
     app.use(vite.middlewares);
   } else {
-    // Vite development bundler integration
+      // Vite development bundler integration
   if (process.env.NODE_ENV !== 'production') {
     const vite = await createViteServer({
       server: { middlewareMode: true },
       appType: 'spa'
     });
     app.use(vite.middlewares);
-  } else {
-    // Vite development bundler integration
-  if (process.env.NODE_ENV !== 'production') {
-    const vite = await createViteServer({
-      server: { middlewareMode: true },
-      appType: 'spa'
-    });
-    app.use(vite.middlewares);
-  } else {
   }
+
+  // Cấu hình trang chủ để không bị lỗi 404
+  app.get('/', (req, res) => {
+    res.status(200).json({ 
+      status: "online",
+      message: "ZNet API đang hoạt động!" 
+    });
+  });
+
   httpServer.listen(PORT, '0.0.0.0', () => {
     console.log(`Server is running at: http://localhost:${PORT}`);
   });
