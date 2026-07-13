@@ -14,7 +14,7 @@ import fs from 'fs';
 import AdmZip from 'adm-zip';
 
 const app = express();
-const PORT = 3000;
+const PORT = Number(process.env.PORT) || 3000;
 
 // Standard middleware
 app.use(express.json());
