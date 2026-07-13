@@ -2257,15 +2257,6 @@ initializeDatabase().then(async () => {
       appType: 'spa'
     });
     app.use(vite.middlewares);
-  } else {
-      // Vite development bundler integration
-  if (process.env.NODE_ENV !== 'production') {
-    const vite = await createViteServer({
-      server: { middlewareMode: true },
-      appType: 'spa'
-    });
-    app.use(vite.middlewares);
-  }
 
   // Cấu hình trang chủ để không bị lỗi 404
   app.get('/', (req, res) => {
