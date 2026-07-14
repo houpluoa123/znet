@@ -1,0 +1,13 @@
+name = "url-shortener"
+main = "src/index.js"
+compatibility_date = "2024-12-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "url-shortener-db"
+database_id = "your-database-id"   # Sẽ tạo sau
+
+[env.production.vars]
+SESSION_SECRET = "chuoi_ngau_nhien"
+ADMIN_EMAIL = "hi@cutngonkhongban.dpdns.org"
+ADMIN_PASSWORD = "Admin123@"
