@@ -6,8 +6,3 @@ compatibility_date = "2024-12-01"
 binding = "DB"
 database_name = "url-shortener-db"
 database_id = "519b31c0-b65e-49df-b77d-93bc942ed3f2"
-
-[env.production.vars]
-SESSION_SECRET = "chuoi_ngau_nhien"
-ADMIN_EMAIL = "hi@cutngonkhongban.dpdns.org"
-ADMIN_PASSWORD = "Admin123@"
