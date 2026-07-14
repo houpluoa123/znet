@@ -1,6 +1,4 @@
-// src/db.js
 export async function initDB(db) {
-  // Tạo bảng nếu chưa có
   await db.exec(`
     CREATE TABLE IF NOT EXISTS users (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -21,19 +19,8 @@ export async function initDB(db) {
       FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
     );
   `);
-
-  // Tạo tài khoản admin mặc định nếu chưa có
-  const adminEmail = 'admin@example.com'; // lấy từ biến môi trường sau
-  const adminPassword = 'Admin123!@#';   // nên dùng env
-  const existing = await db.prepare('SELECT id FROM users WHERE email = ?').bind(adminEmail).first();
-  if (!existing) {
-    const bcrypt = await import('bcryptjs');
-    const hash = bcrypt.hashSync(adminPassword, 10);
-    await db.prepare('INSERT INTO users (email, password, role) VALUES (?, ?, ?)').bind(adminEmail, hash, 'admin').run();
-  }
 }
 
-// Các hàm helper query
 export function getUserByEmail(db, email) {
   return db.prepare('SELECT * FROM users WHERE email = ?').bind(email).first();
 }
@@ -45,5 +32,3 @@ export function getUserById(db, id) {
 export function createUser(db, email, passwordHash) {
   return db.prepare('INSERT INTO users (email, password) VALUES (?, ?)').bind(email, passwordHash).run();
 }
-
-// ... thêm các hàm khác khi cần
