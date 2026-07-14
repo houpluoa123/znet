@@ -1,4 +1,3 @@
-// functions/[[route]].js
 import { Router } from 'itty-router';
 import { handleRegister, handleLogin, handle2FASetup, handle2FAVerify, handleLogin2FA, logout } from '../src/auth';
 import { shorten, redirect, dashboard } from '../src/links';
@@ -8,19 +7,20 @@ import { renderHome, renderRegister, render2FALogin, renderShorten } from '../sr
 
 const router = Router();
 
-// ----- Middleware: xác thực người dùng qua cookie JWT -----
+// Middleware: xác thực người dùng qua cookie JWT
 const withUser = async (request) => {
   const cookieHeader = request.headers.get('Cookie') || '';
   const token = cookieHeader.split('; ').find(row => row.startsWith('token='))?.split('=')[1];
   if (token) {
     try {
-      const payload = JSON.parse(atob(token.split('.')[1]));
+      const { jose } = await import('jose');
+      const { payload } = await jose.jwtVerify(token, new TextEncoder().encode(request.env.SESSION_SECRET));
       request.user = payload;
     } catch (e) {}
   }
 };
 
-// ----- Routes -----
+// Đăng ký routes
 router.get('/', (req) => new Response(renderHome(req.user), { headers: { 'Content-Type': 'text/html' } }));
 router.post('/register', handleRegister);
 router.post('/login', handleLogin);
@@ -43,10 +43,11 @@ router.get('/:shortCode', redirect);
 
 router.all('*', () => new Response('Not Found', { status: 404 }));
 
-// ----- Export cho Pages Functions -----
 export async function onRequest(context) {
   const { request, env } = context;
-  // Khởi tạo database nếu cần (tạo bảng)
+  // Gán env vào request để tiện dùng trong middleware
+  request.env = env;
+  // Khởi tạo DB nếu cần
   await initDB(env.DB);
   return router.handle(request, env);
-                                                 }
+            }
